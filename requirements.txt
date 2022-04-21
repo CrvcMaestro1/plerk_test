@@ -8,3 +8,4 @@ python-dotenv==0.20.0
 django-mock-queries==2.1.7
 six==1.16.0
 dj_database_url
+drf-spectacular==0.17.2
