@@ -79,17 +79,7 @@ WSGI_APPLICATION = "plerk_test.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         'ENGINE': os.getenv("ENGINE"),
-#         'NAME': os.getenv("POSTGRES_DB"),
-#         'USER': os.getenv("POSTGRES_USER"),
-#         'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
-#         'HOST': os.getenv("HOST"),
-#         'PORT': os.getenv("PORT"),
-#     }
-# }
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=bool(int(os.getenv('SSL_REQUIRED'))))
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
