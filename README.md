@@ -25,9 +25,14 @@ Configure your .env as the example and run `docker-compose up`
     
 After build, run tests `docker-compose run --rm test`
 
+# Deployed on heroku
+
+https://plerk-test-backend.herokuapp.com
+
 # DOCS
 
 ### Postman collection
 
+https://documenter.getpostman.com/view/8486968/Uyr8nyMx
 
 
