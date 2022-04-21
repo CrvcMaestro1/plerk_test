@@ -14,7 +14,7 @@ Set enviroment variables
 
 ```
 heroku config:set DISABLE_COLLECTSTATIC=1
-heroku config:set ALLOWED_HOSTS=['*',]
+heroku config:set ALLOWED_HOSTS=* plerk-test-backend.herokuapp.com
 heroku config:set DEBUG=0
 heroku config:set SECRET_KEY=YOUR_KEY
 heroku config:set TIME_ZONE=America/Guayaquil
