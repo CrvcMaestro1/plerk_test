@@ -4,6 +4,8 @@
 
 ### Create a locally database in postgres
 ### Install python 3
+### Install requirements
+`pip install -r requirements.txt`
 ### Migrate
 `python manage.py migrate`
 ### Run load_fixtures.py file
