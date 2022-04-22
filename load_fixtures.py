@@ -13,9 +13,10 @@ from transactions import models
 
 class ImportFixture:
 
-    def __init__(self, length_complete_transaction):
+    def __init__(self, length_complete_transaction, downwards):
         self.path = "fixed_test_database.csv"
         self.length_complete_transaction = length_complete_transaction
+        self.downwards = downwards
         self.index = {
             "company": 0, "price": 1, "date": 2, "status_transaction": 3, "status_approved": 4
         }
@@ -40,6 +41,13 @@ class ImportFixture:
     def get_status_cashed(transaction):
         return transaction.status_transaction == models.TransactionStatus.closed and transaction.status_approved is True
 
+    def move_point_downwards(self, price):
+        float_price = float(price)
+        dollars = int(float_price // self.downwards)
+        cents = int(float_price % self.downwards)
+        converted_price = f'{dollars}.{cents}'
+        return Decimal(converted_price)
+
     def do_not_import_if_already_import(self):
         with open(self.path, newline='', encoding='utf-8') as file:
             csvreader = csv.reader(file)
@@ -63,7 +71,8 @@ class ImportFixture:
                     if not self.is_valid_status_transaction(row[self.index["status_transaction"]]):
                         raise Exception('Invalid status_transaction, {}'.format(row))
                     transaction = models.Transaction(
-                        company=company, price=Decimal(row[self.index["price"]]),
+                        company=company,
+                        price=self.move_point_downwards(row[self.index["price"]]),
                         date=parse_datetime(row[self.index["date"]]),
                         status_transaction=row[self.index["status_transaction"]],
                         status_approved=True if row[self.index["status_approved"]] == "true" else False
@@ -75,6 +84,6 @@ class ImportFixture:
 
 
 if __name__ == '__main__':
-    import_fixtures = ImportFixture(5)
+    import_fixtures = ImportFixture(5, 100)
     rows_imported = import_fixtures.save_transaction()
     print('{} fixtures were imported'.format(rows_imported))
